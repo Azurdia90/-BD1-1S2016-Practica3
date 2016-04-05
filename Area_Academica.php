@@ -1,26 +1,28 @@
 <!DOCTYPE HTML>
 <html>
 	<head>
-		<title>Area Administrativa</title>
+		<?php session_start();?>
+		<title>Area Academica</title>
       	<meta charset="UTF-8">
-		<title>Menu Desplegable</title>
-		<?php session_start()?>
 		<link rel="stylesheet" type="text/css" href="Style/estilo1.css">
 	</head>
+	</head>
 	<body>
+		<!--INICIANDO EL BLOQUE DEL MENU-->
 		<div id="header">
 			<nav> <!-- Aqui estamos iniciando la nueva etiqueta nav -->
 				<ul class="nav">
-					<li><a href="Area_Administrativa.php">Inicio</a></li>
-					<li><a href="Unidades.php">Unidades Administrativas</a></li>
-					<li><a href="Empleados.php">Empleados</a></li>
-					<li><a href="Puestos.php">Puestos</a></li>
-					<li><a href="Cursos.php">Cursos</a></li>
+					<li><a href="Area_Academica.php">Inicio</a></li>
+					<li><a href="Asignacion.php">Asignaciones</a></li>
+					<li><a href="Notas.php">Notas</a></li>
+					<li><a href="Catedraticos.php">Catedraticos</a></li>
 					<li><a href="Cerrar_Sesion.php">Cerrar Sesion</a></li>
 				</ul>
 			</nav><!-- Aqui estamos cerrando la nueva etiqueta nav -->
 		</div>
+		<!--FINALIZANDO EL BLOQUE DEL MENU-->
 		<br/>
+		<!--INICIANDO EL BLOQUE DEL TITULO-->
 		<div id="tabla">
 			<table>
 				<tr>
@@ -45,7 +47,7 @@
 				</tr>
 				<tr>
 					<td>
-						Puesto:
+						Area:
 					</td>
 					<td>
 						<?php
@@ -55,7 +57,7 @@
 				</tr>
 				<tr>
 					<td>
-						Area:
+						Carrera:
 					</td>
 					<td>
 						<?php
@@ -65,5 +67,6 @@
 				</tr>
 			</table>	
 		</div>
+		<!--FINALIZANDO EL BLOQUE DEL TITULO-->
 	</body>
 </html>

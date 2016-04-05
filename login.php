@@ -3,25 +3,37 @@
 	ini_set('display_errors', '1');
 	$usuario = $_POST["in_user"];
 	$password = $_POST["in_pass"];
-	$conexion = mysql_connect("localhost","Practicas_Bases","Practica34") or die('No se pudo conectar: '.mysql_error());
-	mysql_select_db("Practica3_201020331")or die('No se pudo encontrar la Base de datos: ' .mysql_error());
+	$tipo = $_POST["sl_grupo"];
+	$conexion = new mysqli("localhost","Practicas_Bases","Practica34","Practicas_Bases1");
+	if ($conexion->connect_errno) {
+    echo "Fallo al conectar a MySQL: (" . $conexion->connect_errno . ") " . $conexion->connect_error;
+	}
 
-	if(empty($usuario) ){
-		header("Location: index.html");
+	if(empty($usuario) && empty($password)){
+		header("Location: index.php");
 	}else{
-		$query = "SELECT nombre, apellidos FROM Usuarios WHERE id = $usuario AND pass ='$password'";
-		$datos = mysql_query($query) or die('Consulta fallo: '.mysql_error());	
-		if(mysql_num_rows($datos) > 0)
-		{
-			$info = mysql_fetch_array($datos);	
-			setcookie("usuario","$info[0] $info[1]",time() + 3600);
-			//mysql_close();
-			header("Location: Area_Administrativa.php");
-		}		
-		else
-		{
-			header("Location: index.html");
-		}
-	} 
-	mysql_close();
+		if (!($resultado = $conexion->query("CALL login($usuario,$password, @nombre, @apellido, @puesto, @area)"))) {
+    		header("Location: index.php");
+		}else{
+			session_start();
+			$_SESSION["id"] = $usuario;
+			$resultado = $conexion->query("SELECT @nombre");
+			$r_1 = $resultado->fetch_assoc();
+			$_SESSION["lastname"] = $r_1["@nombre"];
+			$resultado = $conexion->query("SELECT @apellido");
+			$r_1 = $resultado->fetch_assoc();
+			$_SESSION["firstname"]= $r_1["@apellido"];
+			$resultado = $conexion->query("SELECT @puesto");
+			$r_1 = $resultado->fetch_assoc();
+			$_SESSION["issues"]= $r_1["@puesto"];
+			$resultado = $conexion->query("SELECT @area");
+			$r_1 = $resultado->fetch_assoc();
+			$_SESSION["area"]= $r_1["@area"];
+			if($tipo > 1){
+				header("Location: Area_Administrativa.php");
+			}else{
+				header("Location: Area_Academica.php");
+			}
+		}	
+	}		 
 ?>
